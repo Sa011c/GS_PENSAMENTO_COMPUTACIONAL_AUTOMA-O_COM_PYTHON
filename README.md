@@ -1,0 +1,2 @@
+# GS_PENSAMENTO_COMPUTACIONAL_AUTOMA-O_COM_PYTHON
+Mission Control AI, tem o objetivo de 
