@@ -1,4 +1,4 @@
-# GS PENSAMENTO COMPUTACIONA E AUTOMAÇÃO COMPYTHON
+# GS PENSAMENTO COMPUTACIONAL E AUTOMAÇÃO COMPYTHON
 Synapse Mission Control AI, tem o objetivo de 
 
 -armazenar dados simulados de uma missão;
