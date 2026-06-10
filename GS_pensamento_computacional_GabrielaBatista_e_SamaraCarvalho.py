@@ -1,14 +1,14 @@
 # ==============================================================================
 # MISSION CONTROL AI - FIAP GLOBAL SOLUTION
 # Equipe: estagiarios00
-# Missão: Orion FIAP test
+# Missão: Synapse FIAP test
 # ==============================================================================
 
 # Constante para evitar erros de codificação com o símbolo de grau
 GRAU = "\u00B0"
 
 # 1. Configurações Iniciais e Dados de Entrada
-NOME_MISSAO = "Orion FIAP test"
+NOME_MISSAO = "Synapse Mission Control FIAP"
 NOME_EQUIPE = "estagiarios00"
 
 # Matriz de dados simulados (6 ciclos x 5 telemetrias)
@@ -159,7 +159,6 @@ def processar_missao():
 
         recomendacao = gerar_recomendacao(classif_ciclo, class_t, class_c, class_b, class_o, class_e)
 
-        # Exibição usando a constante GRAU
         print(f"\nCICLO {num_ciclo}")
         print("-" * 60)
         print(f"Temperatura: {temp} {GRAU}C | {class_t} | {txt_t}")
@@ -175,62 +174,69 @@ def processar_missao():
     # Relatório Final
     # ==========================================================================
     print("\n" + "=" * 60)
-    print("RELATÓRIO FINAL DA MISSÃO")
+    print("  RELATÓRIO FINAL DA MISSÃO")
     print("=" * 60)
-    print(f"Missão: {NOME_MISSAO}")
-    print(f"Equipe: {NOME_EQUIPE}")
-    print(f"Quantidade de ciclos analisados: {total_ciclos}")
-    
-    # Média de temperatura corrigida com a constante GRAU
-    media_temp = somas_telemetria[0] / total_ciclos
-    print(f"Média de temperatura: {media_temp:.2f} {GRAU}C")
-    print(f"Média de comunicação: {somas_telemetria[1]/total_ciclos:.2f}%")
-    print(f"Média de bateria: {somas_telemetria[2]/total_ciclos:.2f}%")
-    print(f"Média de oxigênio: {somas_telemetria[3]/total_ciclos:.2f}%")
-    print(f"Média de estabilidade: {somas_telemetria[4]/total_ciclos:.2f}%")
-    
-    print(f"Ciclo mais crítico: Ciclo {ciclo_mais_critico_idx}")
-    print(f"Maior pontuação de risco: {maior_risco_encontrado}")
-    
-    risco_medio = sum(historico_risco_ciclos) / total_ciclos
-    print(f"Risco médio da missão: {risco_medio:.2f}")
-    print(f"Quantidade de ciclos críticos: {ciclos_criticos_qtd}")
+    print(f"  Missão : {NOME_MISSAO}")
+    print(f"  Equipe : {NOME_EQUIPE}")
+    print(f"  Ciclos : {total_ciclos} analisados")
+    print("-" * 60)
 
-    print("Tendência da missão:")
+    media_temp = somas_telemetria[0] / total_ciclos
+    print("  MÉDIAS DE TELEMETRIA")
+    print(f"    Temperatura  : {media_temp:.2f} {GRAU}C")
+    print(f"    Comunicação  : {somas_telemetria[1]/total_ciclos:.2f}%")
+    print(f"    Bateria      : {somas_telemetria[2]/total_ciclos:.2f}%")
+    print(f"    Oxigênio     : {somas_telemetria[3]/total_ciclos:.2f}%")
+    print(f"    Estabilidade : {somas_telemetria[4]/total_ciclos:.2f}%")
+    print("-" * 60)
+
+    print("  ESTATÍSTICAS DE RISCO")
+    print(f"    Ciclo mais crítico       : Ciclo {ciclo_mais_critico_idx}")
+    print(f"    Maior pontuação de risco : {maior_risco_encontrado}")
+
+    risco_medio = sum(historico_risco_ciclos) / total_ciclos
+    print(f"    Risco médio da missão    : {risco_medio:.2f}")
+    print(f"    Ciclos críticos          : {ciclos_criticos_qtd}")
+    print("-" * 60)
+
+    print("  TENDÊNCIA DA MISSÃO")
     risco_inicial = historico_risco_ciclos[0]
     risco_final = historico_risco_ciclos[-1]
     if risco_final > risco_inicial:
-        print("A missão apresentou tendência de piora.")
+        print("    A missão apresentou tendência de piora.")
     elif risco_final < risco_inicial:
-        print("A missão apresentou tendência de melhora.")
+        print("    A missão apresentou tendência de melhora.")
     else:
-        print("A missão permaneceu estável em relação ao início.")
+        print("    A missão permaneceu estável em relação ao início.")
+    print("-" * 60)
 
-    print("Pontuação acumulada por área:")
+    print("  PONTUAÇÃO ACUMULADA POR ÁREA")
     maior_pontuacao_area = -1
     area_mais_afetada = ""
-    
+
     for idx, area in enumerate(areas_monitoradas):
-        print(f"{area}: {pontos_por_area[idx]} pontos")
+        print(f"    {area:<30}: {pontos_por_area[idx]} pontos")
         if pontos_por_area[idx] > maior_pontuacao_area:
             maior_pontuacao_area = pontos_por_area[idx]
             area_mais_afetada = area
-            
-    print(f"Área mais afetada:\n{area_mais_afetada}")
 
-    print("Classificação final da missão:")
+    print(f"\n    Área mais afetada: {area_mais_afetada}")
+    print("-" * 60)
+
     classif_final = classificar_ciclo(int(risco_medio))
-    print(classif_final)
+    print(f"  CLASSIFICAÇÃO FINAL: {classif_final}")
+    print("-" * 60)
 
-    print("Conclusão:")
+    print("  CONCLUSÃO")
     if classif_final == "MISSÃO ESTÁVEL":
-        print("A operação seguiu dentro dos padrões nominais esperados.")
+        print("    A operação seguiu dentro dos padrões nominais esperados.")
     elif classif_final == "MISSÃO EM ATENÇÃO":
-        print("A missão apresentou instabilidade relevante durante a operação. Apesar "
-              "da tentativa de recuperação no último ciclo, ainda existem sistemas em "
-              "atenção e a equipe deve manter o plano de contingência ativo.")
+        print("    A missão apresentou instabilidade relevante durante a operação.")
+        print("    Apesar da tentativa de recuperação no último ciclo, ainda existem")
+        print("    sistemas em atenção e a equipe deve manter o plano de contingência ativo.")
     else:
-        print("A missao terminou em estado crítico severo. Intervenção imediata de engenharia é necessária.")
+        print("    A missão terminou em estado crítico severo.")
+        print("    Intervenção imediata de engenharia é necessária.")
     print("=" * 60)
 
 if __name__ == "__main__":
